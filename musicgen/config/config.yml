@@ -1,0 +1,3 @@
+cli:
+  task: text-to-audio
+  model: facebook/musicgen-small
