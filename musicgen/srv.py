@@ -12,9 +12,16 @@ def get_absolute_music_path(file_name):
     return os.path.abspath(file_path)
 
 
+import torch
 class MusicManager:
     def __init__(self,task="text-to-audio" , model="facebook/musicgen-small"):
-        self.synthesiser = pipeline(task, model)
+        if torch.cuda.is_available():
+            print("使用cuda")
+            device = 'cuda'
+        else:
+            print("使用cpu")
+            device = "cpu"
+        self.synthesiser = pipeline(task, model, device=device)
     
     def generate_music(self, description, output_file, stop_event, num_tracks=1):
         for track_num in range(num_tracks):

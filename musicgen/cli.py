@@ -28,6 +28,7 @@ SHUT_DOWN_EVENT = threading.Event()
 SHUTDOWN_SIGNAL_RECEIVED = False # 设置一个标志，初始时为 False
 
 def signal_handler(sig, frame):
+    print("SHUT DOWN!")
     global SHUTDOWN_SIGNAL_RECEIVED
     # 检查标志是否已经被设置
     if SHUTDOWN_SIGNAL_RECEIVED:
