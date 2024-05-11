@@ -1,5 +1,6 @@
 import sys
 import threading
+import time
 from musicgen.srv import MusicManager
 from musicgen.config import Config
 import os
@@ -40,6 +41,7 @@ def signal_handler(sig, frame):
     print("good bye!")
     sys.exit(0)
 
+
 def main():
     threads = []
 
@@ -52,10 +54,16 @@ def main():
     music_t = threading.Thread(target=manager.generate_music, args=(args.description, args.output_file, SHUT_DOWN_EVENT, args.num_musics))
     music_t.start()
     threads.append(music_t)
-
-    # 阻塞主线程，直到所有子线程执行完毕
-    for thread in threads:
-        thread.join()
+    
+    while True:
+        try:
+            time.sleep(1000)  # 模拟程序持续运行中
+        except KeyboardInterrupt:
+            # 如果发生 KeyboardInterrupt，例如在 time.sleep() 中按下了 Ctrl+C
+            print('\n发生 KeyboardInterrupt，程序继续运行...')
+            break
+    for t in threads:
+        t.join()
 
     print("Done!")
 

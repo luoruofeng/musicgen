@@ -32,3 +32,4 @@ class MusicManager:
                 print("save to " + track_file)
             else:
                 print("music manager have done!")
+                break
